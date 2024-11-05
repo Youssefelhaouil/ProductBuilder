@@ -5,15 +5,32 @@ import { IProduct } from "../Interfaces";
 import CircleColor from "./Color";
 
 interface IProps {
-  product:IProduct
+  product:IProduct,
+  idx:number,
+  setProductEdit:(product:IProduct)=>void
+  openEdit:()=>void,
+  setProductEditIdx:(value:number)=>void,
+  openDelete:()=>void
+  
 }
 
-export default function ProductCard({ product }: IProps) {
+export default function ProductCard({ product,setProductEdit,openEdit ,setProductEditIdx,idx ,openDelete}: IProps) {
   const { img, title, description, price, color,category } = product;
 
   const RenderCircleColor = color.map((color) => (
     <CircleColor key={color} bgColor={color} />
   ));
+  const onEdit =()=>{
+    setProductEdit(product)
+    setProductEditIdx(idx)
+    openEdit()
+
+  }
+  const onRemove =()=>{
+    setProductEdit(product)
+    openDelete()
+
+  }
 
   return (
     <div className="flex flex-col h-[500px] border-2 rounded-md p-3 space-y-2">
@@ -33,7 +50,7 @@ export default function ProductCard({ product }: IProps) {
       </div>
       <div className="flex justify-between items-center mt-auto">
         <h4 className="text-xl font-bold text-indigo-500">
-          {parseFloat(price).toFixed(2)}
+          {parseFloat(price).toFixed(2)}$
         </h4>
         <CardImage
           url={category.img}
@@ -42,10 +59,10 @@ export default function ProductCard({ product }: IProps) {
         />
       </div>
       <div className="flex space-x-1 pt-1">
-        <Button classname="bg-indigo-500 hover:bg-indigo-400 w-full">
+        <Button classname="bg-indigo-500 hover:bg-indigo-400 w-full" onClick={onEdit}>
           Edit
         </Button>
-        <Button classname="bg-red-500 hover:bg-red-400 w-full">
+        <Button classname="bg-red-500 hover:bg-red-400 w-full" onClick={onRemove}>
           Delete
         </Button>
       </div>

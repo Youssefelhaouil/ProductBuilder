@@ -19,7 +19,7 @@ export default function Modal({ isOpen, title, children, closeModal }: IProps) {
         onClose={closeModal}
       >
         <div className="fixed inset-0 z-10 w-screen bg-black bg-opacity-15 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
+          <div className="flex min-h-full items-center justify-center p-4 backdrop-blur-sm ">
             <DialogPanel
               transition
               className="w-full max-w-md rounded-xl bg-white p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"

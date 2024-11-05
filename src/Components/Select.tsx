@@ -4,7 +4,7 @@ import { Fragment } from 'react'
 import { ICategory } from '../Interfaces'
 
 interface IProps {
-  selected: ICategory,
+  selected: {name:string,img:string},
   setSelected: (category: ICategory) => void,
   Category: ICategory[]
 }
