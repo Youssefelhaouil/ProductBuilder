@@ -11,9 +11,9 @@ import CircleColor from "./Components/Color";
 import { v4 as uuidv4 } from "uuid";
 import Select from "./Components/Select";
 import toast, { Toaster } from "react-hot-toast";
-// import { ProductName } from "./Types";
 
 function App() {
+
   const defaultProduct = {
     title: "",
     description: "",
@@ -25,6 +25,7 @@ function App() {
     },
     color: [],
   };
+
   const [productList, setProductList] = useState<IProduct[]>(Products);
   const [product, setProduct] = useState<IProduct>(defaultProduct);
   const [tempColor, setTempColor] = useState<string[]>([]);
@@ -33,14 +34,16 @@ function App() {
   const [selected, setSelected] = useState<ICategory>(Category[3]);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
-  const [deleteModal,setDeleteModal]=useState(false)
+  const [deleteModal, setDeleteModal] = useState(false);
   const [error, setError] = useState({
     title: "",
     description: "",
     img: "",
     price: "",
   });
-  // concat Color
+
+
+
   const NewColor = [...new Set(tempColor.concat(productEdit.color))];
 
   const open = () => setIsOpen(true);
@@ -54,8 +57,7 @@ function App() {
       img: "",
       price: "",
     });
-    setSelected(Category[3])
-
+    setSelected(Category[3]);
   };
   const openEdit = () => setIsOpenEdit(true);
   const closeModalEdit = () => {
@@ -68,14 +70,14 @@ function App() {
       img: "",
       price: "",
     });
-    setSelected(Category[3])
+    setSelected(Category[3]);
   };
   const openDelete = () => setDeleteModal(true);
   const closeDelete = () => {
-    setDeleteModal(false)
+    setDeleteModal(false);
   };
 
-  //onchange handler
+  // Onchange handler
   const onchangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     setProduct({
@@ -100,9 +102,7 @@ function App() {
     });
   };
 
-
-
-  // Handle submit Form
+  // Handle submit form
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const errors = formValidation({
@@ -127,11 +127,10 @@ function App() {
     setProduct(defaultProduct);
     setTempColor([]);
     setIsOpen(false);
-    toast.success(" product has been added ")
-
+    toast.success("Product has been added");
   };
 
-  // handle edit product
+  // Handle edit product
   const handleEdit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const errors = formValidation({
@@ -156,22 +155,22 @@ function App() {
     setProductEdit(defaultProduct);
     setTempColor([]);
     setIsOpenEdit(false);
-    toast.success("product has been edited ")
-
+    toast.success("Product has been edited");
   };
 
-  // handle Remove 
+  // Handle remove
+  const removeProduct = () => {
+    const filtred = productList.filter(
+      (product) => product.id !== productEdit.id
+    );
+    setProductList(filtred);
+    setDeleteModal(false);
+    toast.success("Product has been deleted");
+  };
 
-  const removeProduct=()=>{
-    const filtred=productList.filter(product=>product.id !== productEdit.id)
-    setProductList(filtred)
-    setDeleteModal(false)
-    toast.success("product has been deleted ")
-
-  }
-  // Form input
+  // Render form input
   const RenderFormInput = FormIputData.map((input) => (
-    <div key={input.id} className="flex flex-col ">
+    <div key={input.id} className="flex flex-col">
       <label htmlFor={input.id}>{input.label}</label>
       <Input
         type={input.type}
@@ -183,9 +182,10 @@ function App() {
       <ErrorMessage msg={error[input.name]} />
     </div>
   ));
-  //Render edit Form Input
+
+  // Render edit form input
   const RenderEditFormInput = FormIputData.map((input) => (
-    <div key={input.id} className="flex flex-col ">
+    <div key={input.id} className="flex flex-col">
       <label htmlFor={input.id}>{input.label}</label>
       <Input
         type={input.type}
@@ -198,7 +198,7 @@ function App() {
     </div>
   ));
 
-  // Product Card
+  // Product card
   const RenderProductCard = productList.map((product, index) => (
     <ProductCard
       key={product.id}
@@ -211,7 +211,7 @@ function App() {
     />
   ));
 
-  // product Color
+  // Product color circle
   const RenderCircleColor = Colors.map((color) => (
     <CircleColor
       key={color}
@@ -226,27 +226,10 @@ function App() {
     />
   ));
 
-  // // RENDER PRODUCT EDIT WITH ERROR MESSAGE
-  // const renderEditProduct = (id:string,label:string,name:ProductName,) => {
-  //   return (
-  //     <div  className="flex flex-col ">
-  //     <label htmlFor={id}>{label}</label>
-  //     <Input
-  //       type={"text"}
-  //       name={name}
-  //       id={id}
-  //       value={productEdit[name]}
-  //       onChange={onchangeEditHandler}
-  //     />
-  //     <ErrorMessage msg={error[name]} />
-  //   </div>
-  //   )
-  // };
-
   return (
     <>
       <div className="container mx-auto ">
-        <div className="flex justify-end pb-4">
+        <div className="flex justify-start items-center pb-4">
           <Button
             width="w-fit"
             classname="bg-indigo-500 hover:bg-indigo-700"
@@ -254,35 +237,32 @@ function App() {
           >
             Add Product
           </Button>
+          
         </div>
         <Modal isOpen={isOpen} title="Add New Product" closeModal={closeModal}>
           <form className="flex flex-col space-y-5" onSubmit={handleSubmit}>
-            <div className="flex flex-col space-y-2 ">
+            <div className="flex flex-col space-y-2">
               {RenderFormInput}
               <Select
                 selected={selected}
                 setSelected={setSelected}
                 Category={Category}
               />
+              <div className="flex gap-5">{RenderCircleColor}</div>
             </div>
-            <div className="flex space-x-2 flex-wrap ">{RenderCircleColor}</div>
-            <div className="flex flex-wrap space-x-2">
-              {tempColor.map((color) => (
-                <span
-                  className="w-fit p-1 text-white rounded-md"
-                  style={{ backgroundColor: color }}
-                >
-                  {color}
-                </span>
-              ))}
+            <div className="flex justify-between items-center gap-5">
+              <Button width="w-full" type="submit" classname="bg-indigo-500">
+                Add Product
+              </Button>
+              <Button
+                onClick={closeModal}
+                type="button"
+                width="w-full"
+                classname="bg-red-500"
+              >
+                Close
+              </Button>
             </div>
-            <Button
-              width="w-full"
-              classname="bg-indigo-500 hover:bg-indigo-700  "
-              onClick={open}
-            >
-              Add Product
-            </Button>
           </form>
         </Modal>
         <Modal
@@ -291,54 +271,48 @@ function App() {
           closeModal={closeModalEdit}
         >
           <form className="flex flex-col space-y-5" onSubmit={handleEdit}>
-            <div className="flex flex-col space-y-2 ">
+            <div className="flex flex-col space-y-2">
               {RenderEditFormInput}
               <Select
-                selected={productEdit.category}
-                setSelected={(value)=>setProductEdit({...productEdit,category:value})}
+                selected={selected}
+                setSelected={setSelected}
                 Category={Category}
               />
+              <div className="flex gap-5">{RenderCircleColor}</div>
             </div>
-            <div className="flex space-x-2 flex-wrap ">{RenderCircleColor}</div>
-            <div className="flex flex-wrap space-x-2">
-              {NewColor.map((color) => (
-                <span
-                  key={color}
-                  className="w-fit p-1 text-white rounded-md mb-1"
-                  style={{ backgroundColor: color }}
-                >
-                  {color}
-                </span>
-              ))}
+            <div className="flex justify-between items-center gap-5">
+              <Button width="w-full" type="submit" classname="bg-indigo-500">
+                Edit Product
+              </Button>
+              <Button
+                onClick={closeModalEdit}
+                type="button"
+                width="w-full"
+                classname="bg-red-500"
+              >
+                Close
+              </Button>
             </div>
-            <Button
-              width="w-full"
-              classname="bg-indigo-500 hover:bg-indigo-700  "
-              onClick={openEdit}
-            >
-              Edit Product
-            </Button>
           </form>
         </Modal>
         <Modal
           isOpen={deleteModal}
-          title="Are You Sure You want to Delete this product ?"
+          title={`Are You Sure You want to Delete this product?`}
           closeModal={closeDelete}
         >
-          
-            <Button
-              width="w-full"
-              classname="bg-red-700 hover:bg-red-500  "
-              onClick={removeProduct}
-            >
-              Delete Product
-            </Button>
+          <Button
+            width="w-full"
+            classname="bg-red-700 hover:bg-red-500  "
+            onClick={removeProduct}
+          >
+            Delete Product
+          </Button>
         </Modal>
         <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
           {RenderProductCard}
         </div>
       </div>
-      <Toaster position="top-center"/>
+      <Toaster position="top-center" />
     </>
   );
 }

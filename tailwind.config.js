@@ -16,7 +16,9 @@ export default {
         '2xl': '6rem',
       },
     },
-    extend: {},
+    darkMode: 'class', 
+    extend: {
+    },
   },
   plugins: [],
 }

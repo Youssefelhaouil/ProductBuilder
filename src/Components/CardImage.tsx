@@ -7,6 +7,7 @@ interface IProps {
 function CardImage({url,alt,classname}: IProps) {
   return (
     <>
+    
     <img src={url} alt={alt} className={classname} /></>
   );
 }

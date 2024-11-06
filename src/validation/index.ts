@@ -14,7 +14,7 @@ export const formValidation = (product: {
   };
   const regexpUrl = /^(ftp|http|https):\/\/[^ "]+$/.test(product.img);
   
-  if(!product.title.trim() || product.title.length <10 ||product.title.length>80){
+  if(!product.title.trim() || product.title.length>80){
     errors.title="Product title must be  between 10 and 80 characters! "
   }
 
