@@ -225,6 +225,12 @@ function App() {
       }}
     />
   ));
+  const renderTempColor=tempColor.map((color)=>(
+    <span className="w-fit px-2 py-2 rounded-md text-white font-medium mb-1" style={{backgroundColor:color}}>{color}</span>
+  ))
+  const renderCarColor=NewColor.map((color)=>(
+    <span className="w-fit px-2 py-2 rounded-md text-white font-medium mb-1" style={{backgroundColor:color}}>{color}</span>
+  ))
 
   return (
     <>
@@ -248,7 +254,10 @@ function App() {
                 setSelected={setSelected}
                 Category={Category}
               />
-              <div className="flex gap-5">{RenderCircleColor}</div>
+              <div className="flex flex-wrap gap-2">{RenderCircleColor}</div>
+              <div className="flex space-x-1 flex-wrap">
+                {renderTempColor}
+              </div>
             </div>
             <div className="flex justify-between items-center gap-5">
               <Button width="w-full" type="submit" classname="bg-indigo-500">
@@ -278,7 +287,11 @@ function App() {
                 setSelected={setSelected}
                 Category={Category}
               />
-              <div className="flex gap-5">{RenderCircleColor}</div>
+              <div className="flex gap-2 flexwrap">{RenderCircleColor}</div>
+              <div className="flex space-x-1 flex-wrap">
+                {renderCarColor}
+              </div>
+
             </div>
             <div className="flex justify-between items-center gap-5">
               <Button width="w-full" type="submit" classname="bg-indigo-500">
