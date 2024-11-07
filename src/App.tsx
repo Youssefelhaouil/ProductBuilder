@@ -44,7 +44,7 @@ function App() {
 
 
 
-  const NewColor = [...new Set(tempColor.concat(productEdit.color))];
+  const NewColor = [...new Set([...tempColor,...productEdit.color])];
 
   const open = () => setIsOpen(true);
   const closeModal = () => {
@@ -259,17 +259,9 @@ function App() {
                 {renderTempColor}
               </div>
             </div>
-            <div className="flex justify-between items-center gap-5">
+            <div className="w-full">
               <Button width="w-full" type="submit" classname="bg-indigo-500">
                 Add Product
-              </Button>
-              <Button
-                onClick={closeModal}
-                type="button"
-                width="w-full"
-                classname="bg-red-500"
-              >
-                Close
               </Button>
             </div>
           </form>
@@ -293,17 +285,9 @@ function App() {
               </div>
 
             </div>
-            <div className="flex justify-between items-center gap-5">
+            <div className="w-full ">
               <Button width="w-full" type="submit" classname="bg-indigo-500">
                 Edit Product
-              </Button>
-              <Button
-                onClick={closeModalEdit}
-                type="button"
-                width="w-full"
-                classname="bg-red-500"
-              >
-                Close
               </Button>
             </div>
           </form>

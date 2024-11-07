@@ -24,8 +24,11 @@ export const formValidation = (product: {
   if(!product.img.trim() || !regexpUrl ){
     errors.img="Invalid Image Url "
   }
-  if(!product.price.trim() || isNaN(Number(product.price))){
+  if(!product.price.trim() || isNaN(Number(product.price)) ){
     errors.price="the price must be a Number"
+  }
+  if(Number(product.price) > 1000000 ){
+    errors.price="the price must be a less than 1 million"
   }
 
 

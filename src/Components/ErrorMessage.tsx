@@ -1,4 +1,4 @@
-interface IProps {
+type IProps = {
   msg: string;
 }
 
